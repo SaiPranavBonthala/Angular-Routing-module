@@ -1,21 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "../auth.service";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
+  constructor(private router: Router, private authService: AuthService) {}
 
-  constructor(private router: Router) { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  // onLoadServers() {
+  //   // Complex Calculation
+  //   this.router.navigate(['/servers']);
+  // }
+
+  onLoadServer(id: number) {
+    this.router.navigate(["/users", id, "edit"], {
+      queryParams: { allowEdit: "1" },
+      fragment: "loading",
+    });
   }
 
-  onLoadServers() {
-    // Complex Calculation
-    this.router.navigate(['/servers']);
+  onLogin() {
+    this.authService.login();
   }
 
+  onLogout() {
+    this.authService.logout();
+  }
 }
